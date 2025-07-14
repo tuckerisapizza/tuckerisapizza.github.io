@@ -1,8 +1,7 @@
 let dvdWidth, dvdHeight;
-let baseSpeed = 0.0015; // Speed factor relative to viewport size
+let baseSpeed = 0.0015; 
 let dvdsVisible = true;
 
-// Function to animate a given DVD element
 function animateDvd(dvdElement) {
   let x = Math.random() * (document.body.clientWidth - dvdWidth);
   let y = Math.random() * (document.body.clientHeight - dvdHeight);
@@ -13,7 +12,6 @@ function animateDvd(dvdElement) {
     const screenHeight = document.body.clientHeight;
     const screenWidth = document.body.clientWidth;
 
-    // Calculate normalized speed
     const normalizedSpeed = baseSpeed * (screenWidth + screenHeight) / 2;
 
     if (y + dvdHeight >= screenHeight || y < 0) {
@@ -28,14 +26,12 @@ function animateDvd(dvdElement) {
     dvdElement.style.left = x + "px";
     dvdElement.style.top = y + "px";
 
-    // Continue animation
     window.requestAnimationFrame(animate);
   }
 
   window.requestAnimationFrame(animate);
 }
 
-// Function to create a new DVD element
 function createDvdElement() {
   const newDvd = document.createElement("div");
   newDvd.classList.add("dvd");
@@ -43,8 +39,7 @@ function createDvdElement() {
   newDvd.style.width = dvdWidth + "px";
   newDvd.style.height = dvdHeight + "px";
 
-  // Determine if this DVD is the special fish
-  const isFish = Math.random() < 0.01; // 1 in 100 chance
+  const isFish = Math.random() < 0.01; 
   newDvd.style.backgroundImage = isFish ? "url('fish.webp')" : "url('renousurgery.webp')";
   newDvd.style.backgroundSize = "cover";
   newDvd.style.backgroundPosition = "center";
@@ -52,31 +47,25 @@ function createDvdElement() {
   newDvd.style.top = "0px";
   document.body.appendChild(newDvd);
 
-  // Play fish sound if it is a fish
   if (isFish) {
     const fishSound = new Audio("fish.mp3");
     fishSound.play();
   }
 
-  // Add click event to create more DVDs
   newDvd.addEventListener("click", createDvdElement);
 
-  // Start animation for the new DVD
   animateDvd(newDvd);
 }
 
-// Toggle DVDs on or off
 document.getElementById("toggle-dvds").addEventListener("click", () => {
   dvdsVisible = !dvdsVisible;
 
-  // Toggle visibility of all DVDs
   const dvds = document.querySelectorAll(".dvd");
   dvds.forEach((dvd) => {
     dvd.style.visibility = dvdsVisible ? "visible" : "hidden";
   });
 });
 
-// Create initial DVD element dynamically on page load
 document.addEventListener("DOMContentLoaded", () => {
   const initialDvd = document.createElement("div");
   initialDvd.classList.add("dvd");
@@ -92,13 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initialDvd.style.top = "0px";
   document.body.appendChild(initialDvd);
 
-  // Get its dimensions for animation
   dvdWidth = initialDvd.clientWidth;
   dvdHeight = initialDvd.clientHeight;
 
-  // Add click event to create more DVDs
   initialDvd.addEventListener("click", createDvdElement);
 
-  // Start animation for the initial DVD
   animateDvd(initialDvd);
 });
